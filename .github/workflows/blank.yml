@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install
+        run: sudo -v ; curl https://rclone.org/install.sh | sudo bash
+
+      - name: Save
+        run: |
+          mkdir -p ~/.config/rclone
+          cat << EOF > ~/.config/rclone/rclone.conf
+          ${{ secrets.CONFIG }}
+          EOF
+
+      - name: Run
+        run: ${{ secrets.COMMAND }}
