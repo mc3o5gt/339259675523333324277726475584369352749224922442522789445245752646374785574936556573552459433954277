@@ -1,13 +1,15 @@
 name: CI
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: "0 */8 * * *"
 
 jobs:
   run:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 180
+    
     steps:
       - name: Install
         run: sudo -v ; curl https://rclone.org/install.sh | sudo bash
